@@ -776,14 +776,115 @@ footer {
 }
 .lang-btn:not(.active):hover { color: var(--c1); }
 
-/* ─── RESPONSIVE ─────────────────────────────────── */
+/* ─── RESPONSIVE MOBILE ──────────────────────────── */
 @media (max-width: 760px) {
-  section { padding: 80px 20px; }
-  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  section { padding: 72px 20px 60px; }
   .hero-stats { display: none; }
+  .contact-box { padding: 36px 20px; }
+
+  /* NAV */
   nav { padding: 0 20px; }
-  .nav-links { gap: 16px; }
-  .contact-box { padding: 40px 24px; }
+  .nav-inner { height: 56px; }
+  .nav-links { display: none; }
+  .nav-logo { font-size: 0.9rem; }
+  .lang-switcher { margin-left: 0; }
+
+  /* Hamburger */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    margin-left: 12px;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--txt2);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--c1); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--c1); }
+
+  /* Mobile menu drawer */
+  .mobile-menu {
+    position: fixed;
+    top: 56px; left: 0; right: 0;
+    background: rgba(3,13,16,0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 99;
+    transform: translateY(-110%);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+  .mobile-menu.open { transform: translateY(0); }
+  .mobile-menu a {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--txt2);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--c1); }
+
+  /* HERO */
+  #hero { padding-top: 80px; text-align: center; }
+  .hero-tag { margin: 0 auto 24px; }
+  .hero-name { font-size: clamp(2.4rem, 11vw, 4rem); }
+  .hero-bio { font-size: 0.9rem; margin: 0 auto 36px; }
+  .hero-ctas { justify-content: center; flex-direction: column; align-items: center; gap: 12px; }
+  .hero-ctas .btn { width: 100%; max-width: 300px; justify-content: center; }
+
+  /* ABOUT */
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  .about-text { text-align: left; }
+  .terminal-window { font-size: 0.72rem; }
+  .terminal-body { padding: 14px 16px; font-size: 0.72rem; }
+
+  /* SKILLS */
+  .skills-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .skill-card { padding: 18px 16px; }
+  .skill-icon { font-size: 1.1rem; margin-bottom: 8px; }
+  .skill-name { font-size: 0.82rem; margin-bottom: 12px; }
+
+  /* PROJECTS */
+  .projects-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  .proj-card.bento-wide,
+  .proj-card.bento-tall { grid-column: span 1 !important; grid-row: span 1 !important; }
+  .proj-card { padding: 20px; }
+  .proj-name { font-size: 0.95rem !important; }
+  .proj-desc { font-size: 0.82rem; }
+
+  /* CONTACT */
+  .contact-title { font-size: 1.4rem; }
+  .contact-links { flex-direction: column; align-items: stretch; }
+  .contact-link { justify-content: center; }
+
+  /* FOOTER */
+  .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 6px; }
+
+  /* SEC */
+  .sec-title { font-size: 1.8rem; }
+  .sec-sub { font-size: 0.88rem; margin-bottom: 36px; }
+}
+
+/* Hamburger hidden on desktop */
+.hamburger { display: none; }
+.mobile-menu { display: none; }
+@media (max-width: 760px) {
+  .hamburger { display: flex; }
+  .mobile-menu { display: flex; }
 }
 
 /* ─── CUSTOM CURSOR ──────────────────────────────── */
@@ -932,13 +1033,26 @@ footer {
       <li><a href="#projects" data-i18n="nav_projects">Projetos</a></li>
       <li><a href="#contact" data-i18n="nav_contact">Contato</a></li>
     </ul>
-    <div class="lang-switcher">
-      <button class="lang-btn active" onclick="setLang('pt')" id="btn-pt">PT</button>
-      <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
-      <button class="lang-btn" onclick="setLang('es')" id="btn-es">ES</button>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('pt')" id="btn-pt">PT</button>
+        <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+        <button class="lang-btn" onclick="setLang('es')" id="btn-es">ES</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
+
+<!-- Mobile menu drawer -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" data-i18n="nav_about" onclick="closeMenu()">Sobre</a>
+  <a href="#skills" data-i18n="nav_skills" onclick="closeMenu()">Skills</a>
+  <a href="#projects" data-i18n="nav_projects" onclick="closeMenu()">Projetos</a>
+  <a href="#contact" data-i18n="nav_contact" onclick="closeMenu()">Contato</a>
+</div>
 
 <main>
 
@@ -1018,8 +1132,8 @@ footer {
           <br>
           <div class="t-line"><span class="t-prompt">→</span><span class="t-cmd">git log --oneline -3</span></div>
           <div class="t-out">
-            <span class="hl">a1f3c9b</span> feat: Discord Métricas<br>
-            <span class="hl">d82e1a0</span> feat: Presell Pages<br>
+            <span class="hl">a1f3c9b</span> feat: presell page Frei Gilson<br>
+            <span class="hl">d82e1a0</span> feat: conversor de desdobramento<br>
             <span class="hl">9f21bc4</span> feat: youtube vsl page<br>
           </div>
           <br>
@@ -1597,7 +1711,26 @@ const barObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 document.querySelectorAll('.skill-card').forEach(el => barObs.observe(el));
 
+// ── HAMBURGER MENU ───────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+function closeMenu() {
+  hamburger && hamburger.classList.remove('open');
+  mobileMenu && mobileMenu.classList.remove('open');
+}
+hamburger && hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.addEventListener('click', e => {
+  if (mobileMenu && mobileMenu.classList.contains('open') &&
+      !mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+    closeMenu();
+  }
+});
+
 // ── TERMINAL BLINK ──────────────────────────────────
+
 let blinkOn = true;
 setInterval(() => {
   const cmd = document.getElementById('blink-cmd');
